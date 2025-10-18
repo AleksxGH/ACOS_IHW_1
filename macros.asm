@@ -1,10 +1,11 @@
+#Макрос для ввода числа
 .macro INPUT_NUMBER (%reg)
     li a7, 5              # syscall для чтения числа
     ecall
     mv %reg, a0           # сохраняем введённое число в регистр
 .end_macro
 
-
+#Макрос для проверки корректности числа
 .macro CHECK_INPUT_NUMBER (%result_reg, %number_reg)
     li t3, 1              # минимальное значение
     li t4, 10             # максимальное значение
@@ -21,7 +22,7 @@ invalid_input:
 end_check:
 .end_macro
 
-
+#Макрос для выхода из программы
 .macro EXIT_PROGRAM
 	li a7, 10   # 10 — код системного вызова "exit"
 	ecall       # вызываем системный вызов
