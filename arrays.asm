@@ -31,5 +31,36 @@ FillLoop:
 FillEnd:
 .end_macro
 
+.macro PRINT_ARRAY(%addr, %length)
+    li t0, 0                # i = 0, счетчик
+
+PrintLoop:
+    bge t0, %length, PrintEnd   # если i >= length, выйти
+
+    # Загружаем число из массива
+    slli t1, t0, 2          # смещение = i*4
+    add t2, %addr, t1       # адрес arr[i] = %addr + i*4
+    lw a0, 0(t2)            # загружаем число в a0
+
+    # Выводим число
+    li a7, 1                # код системного вызова "print integer"
+    ecall
+
+    # Выводим пробел
+    li a0, 32               # ASCII код пробела
+    li a7, 11               # код системного вызова "print char"
+    ecall
+
+    addi t0, t0, 1          # i++
+    j PrintLoop
+
+PrintEnd:
+    # Перевод строки после вывода массива
+    li a0, 10               # ASCII код новой строки
+    li a7, 11
+    ecall
+.end_macro
+
+
 .data
 array_input_message: .string "Введите элемент: "

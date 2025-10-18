@@ -20,7 +20,10 @@ main:
     
 	ALLOC_STACK_ARRAY(s2, s1)  # t0 = адрес массива из 10 элементов
 	FILL_ARRAY(s2, s1)
-    
+	li a7, 4
+    la a0, A_msg
+    ecall
+    PRINT_ARRAY(s2, s1)
     EXIT_PROGRAM
 
 Invalid_input:
@@ -32,4 +35,6 @@ Invalid_input:
 .data
 prompt_num:   .string "Введите длину массива: "
 invalid_input_message: .string "Ошибка! Массив может иметь длину только от 1 до 10."
+A_msg: "A: "
+B_msg: "B: "
 N: .word 0
